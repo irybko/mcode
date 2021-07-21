@@ -65,7 +65,8 @@
 					||		Ru string
 					||		En string
 					||	}
-					||	ChooseLang(lang string,viewdict map[string]Dictionary) map[string]string
+					||	ChooseLang(lang string,viewdict map[string]Dictionary) 
+					||	map[string]string
 	================================================================================================================
 		mcode_random.go		||	RandomValue(r int) int
 					||	RandomNumber(sz1 int, sz2 int) string
