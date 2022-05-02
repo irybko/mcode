@@ -1,132 +1,180 @@
 
-	Copyright (c) 2019-2021 Ivan B. Rybko
+	Copyright (c) 2019-2022 Ivan B. Rybko
 	=====================================
 
 	This is the golang middleware functions library package mcode.
 
-	This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by 
-	the Free Software Foundation, either version 3 of the License, or (at your option) any later version. 
+	This program is free software: you can redistribute it and/or modify it under the terms of the GNU General 
+	Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version. 
 
-	This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+	This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the 
+	implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 	See the GNU General Public License for more details.
 
-	You should have received a copy of the GNU General Public License along with this program. If not, see <https://www.gnu.org/licenses/>.
+	You should have received a copy of the GNU General Public License along with this program. 
+	If not, see <https://www.gnu.org/licenses/>.
 
 	Current mcode files list and set of functions in each of them are present below:
 	================================================================================
 
-	============================================================================================================================================================
-			File			||			Functions
-	============================================================================================================================================================
-		mcode_cmppair.go		||		CmpPair(pm1 interface{},pm2 interface{}) bool
-	============================================================================================================================================================
-		mcode_convert.go		||		GetBytes(key interface{}) []byte
-						||		ToInt64(value string) int64 
-						||		ToFloat64(value string) float64
-	============================================================================================================================================================
-		mcode_dict.go			||		type Dict map[string]interface{}
-						||		NewDict() Dict
-						||		(inst Dict) GetKeys() (int, []string)
-						||		(inst Dict) GetValue(key string) interface{}
-						||		(inst Dict) CheckKeys(hdrs []string) bool
-						||		(inst Dict) SortDict()
-						||		(inst Dict) ToList() [][]interface{}
-						||		(inst Dict) ToStrings() []string
-						||		(inst Dict) GetArgs(key string) string
-						||		(inst Dict) ParseUrl(urlpath string)
-						||		(inst Dict) RunFileServer()
-						||		(inst Dict) GetStructFields(pntr interface{})
-						||		(inst Dict) CopyContent(dct map[string]string)
-						||		(inst Dict) DictSubst(tmpl string) string
-						||		(inst Dict) UnmarshalRequest(request *http.Request)
-						||		(inst Dict) HtmlFormToDict(request *http.Request, fnames []string)
-						||		(inst Dict) DBRequest(dbengine string, dbpath string, sqlreq string)
-	============================================================================================================================================================
-		mcode_dict_export.go		||		(inst Dict) SerializeDict() []byte
-						||		(inst Dict) EncodeJson() []byte
-						||		(inst Dict) DictToArgs()
-						||		(inst Dict) DictToEnv()
-	============================================================================================================================================================
-		mcode_dict_import.go		||		(inst Dict) DeserializeDict(tmp []byte)
-						||		(inst Dict) DecodeJson(data []byte) error
-						||		(inst Dict) ArgsToMap(cmdline bool)
-	============================================================================================================================================================
-		mcode_http.go			||		Corsheaders(method string,resp http.ResponseWriter)
-						||		GetContentType(path string) string
-						||		GetExtName(path string) string
-	============================================================================================================================================================
-		mcode_lang.go			||		type Dictionary struct {
-						||			Ru string
-						||			En string
-						||		}
-						||		ChooseLang(lang string,viewdict map[string]Dictionary) map[string]string
-	============================================================================================================================================================
-		mcode_random.go			||		RandomValue(r int) int
-						||		RandomNumber(sz1 int, sz2 int) string
-						||		RandomString(sz int) string
-						||		GenerateID(prefix string, length int) string
-						||		RandomPath() string
-						||		RandomMember(lst []string) string
-						||		RandomFullName() (string,string,string)
-	============================================================================================================================================================
-		mcode_readstdin.go		||		ReadStdinString(question string) string
-						||		ReadStdinInt(question string) int
-						||		ReadStdinInt64(question string) int64
-						||		ReadStdinFloat64(question string) float64
-	============================================================================================================================================================
-		mcode_repdate.go		||		type ReportDate struct {
-						||			ReportYear	string
-						||			ReportMonth	string
-						||			ReportDay	string
-						||			ReportTime	string
-						||		}
-						||		NewReportDate() ReportDate
-						||		(inst ReportDate) PrintReportDate()
-						||		(inst ReportDate) GetReportDate() string
-						||		(inst ReportDate) GetReportYear() string
-						||		(inst ReportDate) GetReportMonth() string
-						||		(inst ReportDate) GetReportDay() string
-						||		(inst ReportDate) GetReportTime() string
-						||		(inst ReportDate) GetReportDatetime() string
-						||		(inst ReportDate) PrintErr(msg string)
-						||		(inst ReportDate) GetFieldMap() (res map[string]string)
-	============================================================================================================================================================
-		mcode_vfuncs.go			||		type View interface {
-						||			Subst(tmpltext string, kv Dict) string
-    						||			Listsubst(maintmpl string, embedtmpl string, key string, lstkv []Dict) string
-						||		}
-						||		Subst(tmpltext string, kv Dict) string 
-						||		Listsubst(maintmpl string, embedtmpl string, key string, lstkv []Dict) string 
-	============================================================================================================================================================
-		mcode_passwd.go			||		MakePassword(phrase string) ([]byte,string)
-						||		GetPasswordFromCmdLine() ([]byte, string) 
-						||		CheckPassword_1(hashedPwd string, plainPwd []byte) bool
-						||		CheckPassword_2(passwd1 []byte,passwd2 []byte) bool
-	============================================================================================================================================================
-		mcode_random.go			||		MakeRandomString() string 
-						||		GenerateID(prefix string, length int) string 
-						||		MakeRandomNumber(kind string) string 
-						||		GetRandomString(variants []string) string 
-						||		MakeRandomNames(num int) []string 
-						||		CreateImage(width int,height int, imgPath string, rgba1 uint8, rgba2 uint8,rgba3 uint8, rgba4 uint8)
-						||		CreateImageArray(imgPath string, width int, height int, limit uint8, offset uint8) 
-	============================================================================================================================================================
-		mcode_fileio.go			||		GetFileContentType(out *os.File) (string, error) 
-						||		GetFileMode(path string) os.FileMode 
-						||		CurSize(path string) int64 
-						||		type RandomAccess struct {
-						||			Path    string
-						||			Data    []byte
-    						||			Offset  int64
-						||			Datasz  int
-						||			//
-						||			Crypto  bool
-						||			Passwd  string
-						||		}
-						||		(inst RandomAccess) CreateHash(key string) string
-						||		(inst RandomAccess) Read()
-						||		(inst RandomAccess) DecryptContent(data []byte, passphrase string) []byte
-						||		(inst RandomAccess) Write() bool
-						||		(inst RandomAccess) EncryptContent(data []byte, passphrase string) []byte
-	============================================================================================================================================================
+	==================================================================================================================================
+		File			||			Functions
+	==================================================================================================================================
+					|| Function name 	    	|| Parameters list			||	Returning type	||
+	==================================================================================================================================
+		mcode_cmppair.go	|| CmpPair		    	|| pm1 	 interface{},			||			||
+					||				|| pm2   interface{} 			||	bool		||
+	==================================================================================================================================
+		mcode_convert.go	|| GetBytes		    	|| key   interface{} 			||	[]byte		||
+					|| ToInt64		    	|| value string				||	int64 		||
+					|| ToFloat64		    	|| value string 			||      float64		||	
+	==================================================================================================================================
+		mcode_dict.go		|| type Dict			|| map[string]interface{}		||			||
+					|| NewDict() 		    	||					||	Dict		||
+					|| (inst Dict) GetKeys      	|| 					||	int, []string	||
+					|| (inst Dict) GetValue     	|| key     string 			||	interface{}	||
+					|| (inst Dict) CheckKeys    	|| hdrs    []string			||	bool		||
+					|| (inst Dict) SortDict	    	|| 					||			||
+					|| (inst Dict) ToList  	    	||					||	[][]interface{}	||
+					|| (inst Dict) ToStrings()  	||					||	[]string	||
+					|| (inst Dict) GetArgs	   	|| key      string 			||	string		||
+					|| (inst Dict) ParseUrl		|| urlpath  string			||			||
+					|| (inst Dict) RunFileServer	||					||			||	
+					|| (inst Dict) GetStructFields  || pntr     interface{}			||			||
+					|| (inst Dict) CopyContent	|| dct      map[string]string		||			||
+					|| (inst Dict) DictSubst	|| tmpl     string 			||	string		||
+					|| (inst Dict) UnmarshalRequest || request  *http.Request 		||			||
+					|| (inst Dict) HtmlFormToDict   || request  *http.Request, 		||			||
+					||				|| fnames   []string			||			||
+					|| (inst Dict) DBRequest	|| dbengine string,			||			|| 
+					||				|| dbpath   string,			||			|| 
+					||				|| sqlreq   string			||			||
+	==================================================================================================================================
+		mcode_dict_export.go	|| (inst Dict) SerializeDict	||					||	[]byte		||
+					|| (inst Dict) EncodeJson	||					||	[]byte		||
+					|| (inst Dict) DictToArgs	||					||			||
+					|| (inst Dict) DictToEnv	||					||			||
+	==================================================================================================================================
+		mcode_dict_import.go	|| (inst Dict) DeserializeDict  || tmp      	[]byte			||			||
+					|| (inst Dict) DecodeJson 	|| data 	[]byte 			||	error		||
+					|| (inst Dict) ArgsToMap	|| cmdline 	bool			||			||
+	==================================================================================================================================
+		mcode_http.go		|| Corsheaders			|| method 	string,			||			||
+					||				|| resp 	http.ResponseWriter	||			||
+					|| GetContentType		|| path 	string 			||	string		||
+					|| GetExtName			|| path 	string 			||	string		||
+	==================================================================================================================================
+		mcode_lang.go		|| type Dictionary 		|| struct {				||			||
+					||				||	Ru string			||			||
+					||				||	En string			||			||
+					||				|| }					||			||
+					|| ChooseLang			|| lang     	string,			||			||	
+					||			   	|| viewdict 	map[string]Dictionary	|| map[string]string	||
+	==================================================================================================================================
+		mcode_random.go		|| RandomValue			|| r 		int			||	int		||
+					|| RandomNumber			|| sz1 		int, 			||			||
+					||				|| sz2 		int			||  	string		||
+					|| RandomString			|| sz 		int			||	string		||
+					|| GenerateID			|| prefix 	string, 		||			||
+					||				|| length 	int			|| 	string		||
+					|| RandomPath			||					||	string		||
+					|| RandomMember			|| lst 		[]string		||	string		||
+					|| RandomFullName		|| 					||	(string,	||
+					||				||					||	string,		||
+					||				||					||	string)		||
+	==================================================================================================================================
+		mcode_readstdin.go	|| ReadStdinString		|| question 	string			|| 	string		||
+					|| ReadStdinInt			|| question 	string			||	int		||
+					|| ReadStdinInt64		|| question 	string 			||	int64		||
+					|| ReadStdinFloat64		|| question 	string 			||	float64		||
+	==================================================================================================================================
+		mcode_repdate.go	|| type ReportDate 		|| struct {				||			||
+					||				||	ReportYear	string		||			||
+					||				||	ReportMonth	string		||			||
+					||				||	ReportDay	string		||			||
+					||				||	ReportTime	string		||			||
+					||				||    }					||			||
+					|| NewReportDate 		||					||	ReportDate	||
+					|| (inst ReportDate) 		||					||			||
+					||	PrintReportDate		||					||			||	
+					|| (inst ReportDate) 		||					||			||
+					||	GetReportDate		||					||	string		||
+					|| (inst ReportDate) 		||					||			||
+					||	GetReportYear() 	||					||	string		||	
+					|| (inst ReportDate) 		||					||			||
+					||	GetReportMonth() 	||					||	string		||
+					|| (inst ReportDate) 		||					||			||
+					||	GetReportDay() 		||					||	string		||
+					|| (inst ReportDate) 		||					||			||
+					||	GetReportTime() 	||					||	string		||
+					|| (inst ReportDate) 		||					||			||
+					||	GetReportDatetime() 	||					||	string		||
+					|| (inst ReportDate) 		||					||			||
+					||	PrintErr(msg string)	||					||			||	
+					|| (inst ReportDate) 		||					||			||		
+						GetFieldMap() 		||					|| res map[string]string||
+	==================================================================================================================================
+		mcode_vfuncs.go		|| type View 			||  interface {				||			||
+					||				||	Subst(tmpltext string, kv Dict) ||      string		||
+    					||				||	Listsubst(maintmpl string, 	||			||
+					||				|| 		 embedtmpl string, 	||			||	
+					||				||     		       key string, 	||			||
+					||			        ||     		     lstkv []Dict) 	||	string		||
+					||				||  }					||			||
+					|| Subst			||  tmpltext 	string, 		||			||
+					||				||  kv 		Dict			||	string 		||
+					|| Listsubst			||  maintmpl 	string, 		||			||
+					||		         	||  embedtmpl   string, 		||			||
+					||			        ||  key 	string, 		||			||
+					||		             	||  lstkv	[]Dict 			||	string 		||
+	==================================================================================================================================
+		mcode_passwd.go		|| MakePassword			||  phrase 	string			||    ([]byte,string)   ||
+					|| GetPasswordFromCmdLine() 	||					||    ([]byte, string)  || 
+					|| CheckPassword_1		||  hashedPwd   string, 		||			||
+					||				||  plainPwd    []byte			|| 	bool		||
+					|| CheckPassword_2		||  passwd1 	[]byte,			||			||
+					||				||  passwd2     []byte			||	bool		||
+	==================================================================================================================================
+		mcode_random.go		|| MakeRandomString		||					||	string 		||
+					|| GenerateID			||  prefix 	string, 		||			||
+					||				||  length 	int			|| 	string 		||
+					|| MakeRandomNumber		||  kind 	string			||	string 		||
+					|| GetRandomString              ||  variants    []string                || 	string          ||
+					|| MakeRandomNames              ||  num         int                     ||	[]string        ||
+					|| CreateImage			||  width 	int,			||			||
+					||			   	||  height 	int, 			||			||
+					||			  	||  imgPath 	string, 		||			||
+					||			        ||  rgba1 	uint8, 			||			||
+					||			    	||  rgba2 	uint8,			||			||
+					||			    	||  rgba3 	uint8, 			||			||
+					||			        ||  rgba4 	uint8			||			||
+					|| CreateImageArray		||  imgPath 	string, 		||			||
+					||				||  width 	int, 			||			||
+					||				||  limit 	uint8, 			||			||
+					||				||  offset 	uint8			||			|| 
+	==================================================================================================================================
+		mcode_fileio.go		|| GetFileContentType		||  out 	*os.File		||    (string, error) 	||
+					|| GetFileMode			||  path 	string 			||	os.FileMode 	||
+					|| CurSize			||  path 	string 			||      int64 		||
+					|| type RandomAccess 		||  struct {				||			||
+					||				||	Path    string			||			||
+					||				||	Data    []byte			||			||	
+    					||				||	Offset  int64			||			||
+					||				||	Datasz  int			||			||
+					||				||	//				||			||	
+					||				||	Crypto  bool			||			||
+					||				||	Passwd  string			||			||
+					||				||     }				||			||
+					|| (inst RandomAccess)          ||                                      ||                      ||
+					||	CreateHash		||	key 	string 			||	string		||
+					|| (inst RandomAccess) 		||					||			||
+					||	Read()			||					||			||			
+					|| (inst RandomAccess) 		||					||			||
+					||	DecryptContent		||	data 	[]byte, 		||			||	
+					||				||	passphrase string 		||	[]byte		||
+					|| (inst RandomAccess)		||					||			||	
+					||	 Write() 		||					||	bool		||
+					|| (inst RandomAccess) 		||					||			||
+					||	 EncryptContent		||	data 	[]byte, 		||			||
+					||				||	passphrase string 		||	[]byte		||
+	==================================================================================================================================
