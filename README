@@ -106,9 +106,9 @@
 	==========================================================================================
 	|| Function name 	    	|| Parameters list		||	Returning type	||
 	==========================================================================================
-	|| GetFileContentType		||  out 	*os.File	||    (string, error) 	||
-	|| GetFileMode			||  path 	string 		||	os.FileMode 	||
-	|| CurSize			||  path 	string 		||       int64 		||
+	|| GetFileContentType		||  out 	*os.File	||     (string, error) 	||
+	|| GetFileMode			||  path 	string 		||     os.FileMode 	||
+	|| CurSize			||  path 	string 		||     int64 		||
 	|| type RandomAccess 		||  struct {			||			||
 	||				||	Path    string		||			||
 	||				||	Data    []byte		||			||	
@@ -121,7 +121,7 @@
 	|| (inst RandomAccess)          ||                              ||                      ||
 	||	CreateHash		||	key 	string 		||	string		||
 	|| (inst RandomAccess) 		||				||			||
-	||	Read()			||				||			||			
+	||	Read()			||                              ||                      ||
 	|| (inst RandomAccess) 		||				||			||
 	||	DecryptContent		||	data 	[]byte, 	||			||	
 	||				||	passphrase string 	||	[]byte		||
