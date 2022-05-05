@@ -79,30 +79,6 @@
 	|| (inst Dict) ArgsToMap	|| cmdline 	bool		||			||
 	==========================================================================================
 
-		mcode_fakedata.go
-	==========================================================================================
-	|| Function name 	    	|| Parameters list		||	Returning type	||
-	==========================================================================================
-	|| MakeRandomString 		|| 				||      string		||
-	|| GenerateID			|| prefix 	string,		||			||
-	||				|| length	int		||	string		||
-	|| MakeRandomNumber		|| kind		string		||	string		||
-	|| GetRandomString		|| variants     []string	||	string		||
-	|| MakeRandomNames		|| num		int		||	[]string	||
-	|| CreateImage			|| width	int,		||			||
-	||				|| height	int,		||			||
-	||				|| imgPath	string,		||			||
-	||				|| rgba1	uint8,		||			||
-	||				|| rgba2	uint8,		||			||
-	||				|| rgba3 	uint8,		||			||
-	||				|| rgba4 	uint8		||			||
-	|| CreateImageArray		|| imgPath	string,		||			||
-	||				|| width	int,		||			||
-	||				|| height 	int,		||			||
-	||				|| limit   	uint8,		||			||
-	|| 				|| offset	uint8		||			||
-	==========================================================================================
-
 		mcode_fileio.go
 	==========================================================================================
 	|| Function name 	    	|| Parameters list		||	Returning type	||
@@ -154,18 +130,6 @@
 	|| ChooseLang			|| lang     	string,		||			||	
 	||			   	|| viewdict 	map[string]	||			||
 	||				||		Dictionary	|| map[string]string	||
-	==========================================================================================
-
-		mcode_passwd.go
-	==========================================================================================
-	|| Function name 	    	|| Parameters list		||   Returning type	||
-	==========================================================================================
-	|| MakePassword			||  phrase 	string		||   ([]byte,string)   	||
-	|| GetPasswordFromCmdLine() 	||				||   ([]byte, string)  	|| 
-	|| CheckPassword_1		||  hashedPwd   string, 	||			||
-	||				||  plainPwd    []byte		||	bool		||
-	|| CheckPassword_2		||  passwd1 	[]byte,		||			||
-	||				||  passwd2     []byte		||	bool		||
 	==========================================================================================
 
 		mcode_random.go	
@@ -225,25 +189,3 @@
 	|| (inst ReportDate) 		||				||			||		
 	||	GetFieldMap() 		||				|| res map[string]string||
 	==========================================================================================
-
-		mcode_vfuncs.go
-	==========================================================================================
-	|| Function name 	    	|| Parameters list		    ||	Returning type	||
-	==========================================================================================
-	|| type View 			||  interface {			    ||			||
-	||				||      Subst(tmpltext string,      ||			||
-	||				||		kv 	Dict) 	    || 	string		||
-	||				||	Listsubst(maintmpl string,  ||			||
-	||				|| 		 embedtmpl string,  ||			||	
-	||				||     		       key string,  ||			||
-	||			        ||     		     lstkv []Dict)  ||	string		||
-	||				||  }				    ||			||
-	|| Subst			||  tmpltext 	string, 	    ||			||
-	||				||  kv 		Dict		    ||	string 		||
-	|| Listsubst			||  maintmpl 	string, 	    ||			||
-	||		         	||  embedtmpl   string, 	    ||			||
-	||			        ||  key 	string, 	    ||			||
-	||		             	||  lstkv	[]Dict 		    ||	string 		||
-	==========================================================================================
-
-
