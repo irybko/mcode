@@ -1,6 +1,6 @@
 /*
-	Copyright (c) 2020 Ivan B. Rybko
-	================================
+	Copyright (c) 2020-2022 Ivan B. Rybko
+	=====================================
 
 	This program is a part of golang middleware functions library package mcode.
 

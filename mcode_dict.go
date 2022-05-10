@@ -1,5 +1,5 @@
 /*
-	Copyright (c) 2020-2021 Ivan B. Rybko
+	Copyright (c) 2020-2022 Ivan B. Rybko
 	=====================================
 
 	This program is a part of golang middleware functions library package mcode.
@@ -92,7 +92,7 @@ func (inst Dict) CheckKeys(hdrs []string) bool {
 		}
 		flag = true
 	} else {
-		if CmpPair(hdrs, keys) {
+		if reflect.DeepEqual(hdrs, keys) {
 			flag = true
 		} else {
 			flag = false
@@ -172,7 +172,7 @@ func (inst Dict) GetArg(key string) string {
 //
 // ParseURL to map
 //
-func (inst Dict) ParseUrl(urlpath string) {
+func (inst Dict) ParseURL(urlpath string) {
 	//
     	step, err := url.Parse(urlpath) 	// Parse the URL and ensure there are no errors.
     	if err != nil {
@@ -185,8 +185,11 @@ func (inst Dict) ParseUrl(urlpath string) {
 	inst["port"] 	= port
     	inst["path"] 	= step.Path
 	queryargsmap,_  := url.ParseQuery(step.RawQuery)
-    	for key, values := range queryargsmap {
-        	inst[key] = strings.Join(values,",")
+	if len(queryargsmap) != 0 {
+		//
+	    	for key, values := range queryargsmap {
+        		inst[key] = strings.Join(values,",")
+		}
 	}
 }
 //
@@ -237,7 +240,7 @@ func (inst Dict) RunFileServer() {
 //
 func (inst Dict) GetStructFields(pntr interface{}) {
 	//
-    	elem := reflect.ValueOf(pntr).Elem()
+    	elem := reflect.ValueOf(pntr)//.Elem()
 	ElemType := elem.Type()
 	//
 	for index:=0; index< elem.NumField(); index++ {
@@ -276,7 +279,14 @@ func (inst Dict) DictSubst(tmpl string) string {
 		//
 		if strings.Index(tmpl, k) != -1 {
 			//
-			tmpl = strings.ReplaceAll(tmpl, k, v.(string))
+			var step string = "" 
+			switch tvalue := v.(type) {
+			case int: 
+				step = fmt.Sprintf("%d", tvalue)
+			case string: 
+				step = tvalue
+			} 
+			tmpl = strings.ReplaceAll(tmpl, k, step)
 		}
 	}
 	return tmpl

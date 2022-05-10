@@ -1,18 +1,41 @@
+/*
+	Copyright (c) 2020-2022 Ivan B. Rybko
+	=====================================
+
+	This program is a part of golang middleware functions library package mcode.
+
+	This program is free software: you can redistribute it and/or modify 
+	it under the terms of the GNU General Public License as published by 
+	the Free Software Foundation, either version 3 of the License, or 
+	(at your option) any later version. 
+
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of 
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+	See the GNU General Public License for more details.
+
+	You should have received a copy of the GNU General Public License 
+	along with this program. If not, see <https://www.gnu.org/licenses/>.
+
+*/
 package mcode
 //
 import (
     "os"
     "fmt"
-    "net/http"
     "log"
     "io"
     "io/ioutil"
+    "net/http"
+    "sync"
     "crypto/md5"
     "crypto/aes"
     "crypto/cipher"
     "encoding/hex"
     "crypto/rand"
 )
+//
+var mutex sync.Mutex
 //
 func GetFileContentType(out *os.File) (string, error) {
     // Only the first 512 bytes are used to sniff the content type.
@@ -48,11 +71,11 @@ func CurSize(path string) int64 {
 type RandomAccess struct {
 	Path    string
 	Data    []byte
-    Offset  int64
+	Offset  int64
 	Datasz  int
-    //
-    Crypto  bool
-    Passwd  string
+	//
+	Crypto  bool
+	Passwd  string
 }
 //
 func (inst RandomAccess) CreateHash(key string) string {
@@ -63,28 +86,28 @@ func (inst RandomAccess) CreateHash(key string) string {
 //
 func (inst RandomAccess) Read() {
 	plen := len(inst.Path)
-    var fmode    os.FileMode
+	var fmode    os.FileMode
 
-    switch {
+	switch {
 		case plen == 0: log.Fatal("Path to data file has no found")
 		case plen > 0:
 			fmode = GetFileMode(inst.Path)
-            fd, err := os.OpenFile(inst.Path, os.O_RDONLY, fmode)
-            defer fd.Close()
+			fd, err := os.OpenFile(inst.Path, os.O_RDONLY, fmode)
+			defer fd.Close()
 
-            if err != nil {
+			if err != nil {
 				log.Fatal(err)
 			}
 
 			switch {
 				case inst.Offset == 0:
 					content := make([]byte, CurSize(inst.Path))
-                    content, err =  ioutil.ReadFile(inst.Path)
+                			content, err =  ioutil.ReadFile(inst.Path)
 
 					if err == nil || err == io.EOF {
 						log.Fatal(err)
 					}
-                    fmt.Printf("%s\n", inst.Data)
+                			fmt.Printf("%s\n", inst.Data)
 					inst.Data = content
 				case inst.Offset > 0:
 					// read
@@ -95,14 +118,12 @@ func (inst RandomAccess) Read() {
 					}
 					inst.Data = bufdata
 			}
-    }
-    //
-    switch inst.Crypto {
-    case true:
-        inst.Data = inst.DecryptContent(inst.Data, inst.Passwd)
-    case false:
-        return
-    }
+	}
+	//
+	switch inst.Crypto {
+		case true:	inst.Data = inst.DecryptContent(inst.Data, inst.Passwd)
+		case false:	return
+	}
 }
 //
 func (inst RandomAccess) DecryptContent(data []byte, passphrase string) []byte {
@@ -127,20 +148,20 @@ func (inst RandomAccess) DecryptContent(data []byte, passphrase string) []byte {
 func (inst RandomAccess) Write() bool {
 	plen := len(inst.Path)
 	var result bool
-    var fmode  os.FileMode
-    //
-    if inst.Crypto {
-        inst.Data = inst.EncryptContent(inst.Data, inst.Passwd)
-    }
-    //
+	var fmode  os.FileMode
+	//
+	if inst.Crypto {
+    		inst.Data = inst.EncryptContent(inst.Data, inst.Passwd)
+	}
+	//
 	switch {
 		case plen == 0: log.Fatal("Path to data file has no founf")
 		case plen > 0:
 			fmode = GetFileMode(inst.Path)
-            fd, err := os.OpenFile(inst.Path, os.O_RDONLY, fmode)
-            defer fd.Close()
+        		fd, err := os.OpenFile(inst.Path, os.O_RDONLY, fmode)
+        		defer fd.Close()
 
-            if err != nil {
+        		if err != nil {
 				log.Fatal(err)
 			}
 
@@ -165,13 +186,13 @@ func (inst RandomAccess) Write() bool {
 		                        }
 					if nbytes == maxlen {
 						result = true
-                    } else {
-                        result = false
-                    }
-                    mutex.Unlock()
-				}
+                			} else {
+                    				result = false
+                			}
+                		mutex.Unlock()
+			}
 	}
-    //
+	//
 	return result
 }
 //
@@ -188,6 +209,3 @@ func (inst RandomAccess) EncryptContent(data []byte, passphrase string) []byte {
 	ciphertext := gcm.Seal(nonce, nonce, data, nil)
 	return ciphertext
 }
-//
-
-

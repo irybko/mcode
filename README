@@ -4,8 +4,7 @@
 	This is the golang middleware functions library package mcode.
 
 	This program is free software: you can redistribute it and/or modify it under the terms of the GNU General 
-	Public License as published by the Free Software Foundation, either version 3 of the License, or 
-	(at your option) any later version. 
+	Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version. 
 
 	This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the 
 	implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
@@ -17,29 +16,21 @@
 	Current mcode files list and set of functions in each of them are present below:
 	================================================================================
 
-		mcode_cmppair.go
-	==========================================================================================
-	|| Function name 	    	|| Parameters list		||	Returning type	||
-	==========================================================================================
-	|| CmpPair		    	|| pm1 	 interface{},		||			||
-	||				|| pm2   interface{} 		||	bool		||
-	==========================================================================================
-
 		mcode_convert.go
 	==========================================================================================
-	|| Function name 	    	|| Parameters list		||	Returning type	||
+	|| Function name 		|| Parameters list		||	Returning type	||
 	==========================================================================================
-	|| GetBytes		    	|| key   interface{} 		||	[]byte		||
-	|| ToInt64		    	|| value string			||	int64 		||
-	|| ToFloat64		    	|| value string 		||      float64		||	
+	|| GetBytes			|| key   interface{} 		||	[]byte		||
+	|| ToInt64			|| value string			||	int64 		||
+	|| ToFloat64			|| value string 		||      float64		||	
 	==========================================================================================
 
 		mcode_dict.go
 	==========================================================================================
-	|| Function name 	    	|| Parameters list		||	Returning type	||
+	|| Function name 		|| Parameters list		||	Returning type	||
 	==========================================================================================
 	|| type Dict			|| map[string]interface{}	||			||
-	|| NewDict() 		    	||				||	Dict		||
+	|| NewDict() 			||				||	Dict		||
 	|| (inst Dict) GetKeys      	|| 				||	int, []string	||
 	|| (inst Dict) GetValue     	|| key     string 		||	interface{}	||
 	|| (inst Dict) CheckKeys    	|| hdrs    []string		||	bool		||
@@ -189,3 +180,4 @@
 	|| (inst ReportDate) 		||				||			||		
 	||	GetFieldMap() 		||				|| res map[string]string||
 	==========================================================================================
+

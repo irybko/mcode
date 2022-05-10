@@ -1,5 +1,5 @@
 /*
-	Copyright (c) 2020-2021 Ivan B. Rybko
+	Copyright (c) 2020-2022 Ivan B. Rybko
 	=====================================
 
 	This program is a part of golang middleware functions library package mcode.
@@ -68,9 +68,7 @@ func (inst Dict) ArgsToMap(cmdline bool) {
 		lst = os.Args
 	}
 	lst = os.Environ()
-	log.Println("lst: ", lst)
-	//
-	idx     := 0
+	idx := 0
 	for idx < len(lst) {
 		v := lst[idx] 
 		//
