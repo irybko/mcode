@@ -20,6 +20,9 @@
 */
 package mcode
 
+import (
+	"os"
+)
 //
 // Put Dict`s instance content to os.Env
 //
