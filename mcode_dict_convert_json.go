@@ -21,8 +21,6 @@
 package mcode
 
 import (
-	"os"
-	"bytes"
 	"encoding/json"
 )
 //
