@@ -28,9 +28,12 @@ import (
 )
 	
 //
-// Run file server by Dict`s instance which has keys which are file system`s paths and relevant values which are port numbers
+//	Run file server by Dict`s instance which has keys which are file system`s paths and relevant values which are port numbers.
+//	kv := NewDict()
+//	kv["/path/to/something"] = ":9000"
+//	....
 //
-func (inst Dict) RunFileServer() {
+func (inst Dict) RunFileServer(addrname string) {
 	//
 	mlen, keys := inst.GetKeys()
 	idx  := 0
@@ -59,7 +62,12 @@ func (inst Dict) RunFileServer() {
 					//
 					wg.Done()
 					//
-					err := http.ListenAndServe(port, http.FileServer(http.Dir(path)))
+					fs := http.HandlerFunc(func(resp http.ResponseWriter, req *http.Request) {
+						Corsheaders("GET", resp)
+						http.FileServer(http.Dir(path))
+					})	
+					addr:= fmt.Sprintf("%s:%s/%s", addrname, port, path)
+					err := http.ListenAndServe(addr, fs)
 					if err != nil {
 						log.Fatal(err)
 					}
